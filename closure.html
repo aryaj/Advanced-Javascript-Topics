@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Lexical scope defines how variable names are resolved in nested functions
+
+      // Nested (child) functions have access to the scope of their parent functions
+
+      // This is often confused with closure, but lexical scope is only an important part of closures
+
+      // A closure is a function having access to parent or lexical scope, even after the parent function is closed
+
+      // A closure is created when we define a function, not when a function is executed
+
+      // global scope
+
+      let x = 1;
+
+      const parentFunction = () => {
+        // local scope
+        let myValue = 2;
+        console.log(x);
+        console.log(myValue);
+
+        const childFunction = () => {
+          console.log((x += 5));
+          console.log((myValue += 5));
+        };
+
+        return childFunction;
+      };
+
+      const result = parentFunction();
+
+      result();
+      result();
+
+      console.log(x);
+      // console.log(myValue); // reference error, private variable
+
+      // IIFE (Immediately invoked function expression)
+
+      const privateCounter = (() => {
+        let count = 0;
+        console.log(`Initial value ${count}`);
+        return () => {
+          count += 1;
+          console.log(count);
+        };
+      })();
+
+      privateCounter();
+
+      const credits = ((num) => {
+        let credits = num;
+        console.log(`Initial credits value : ${num}`);
+        return () => {
+          credits -= 1;
+          if (credits > 0) {
+            console.log(`playing game,${credits} credits remaining`);
+          }
+          if (credits <= 0) {
+            console.log("Not enough credits");
+          }
+        };
+      })(3);
+
+      credits()
+      credits()
+      credits()
+
+    </script>
+  </body>
+</html>
