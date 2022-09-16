@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const xArray = [1, 2, 3, 4];
+
+      const yArray = xArray;
+
+      // Show copy vs. Deep copy (clones)
+
+      // With spread operator
+
+      const zArray = [...yArray, 5];
+      console.log(xArray);
+      console.log(yArray);
+      console.log(zArray);
+
+      console.log(xArray === yArray);
+      console.log(zArray === yArray);
+
+      // With Object.assign()
+
+      const tArray = Object.assign([], zArray);
+
+      console.log(tArray);
+      console.log(tArray === zArray);
+
+      // But if there are nested arrays or objects...
+      yArray.push([8, 9, 10]);
+      const vArray = [...yArray];
+      vArray[4].push(5);
+      vArray[4].push(5);
+      console.log("vArray", vArray);
+      console.log("yArray", yArray);
+
+      // nested structural data types still share a reference
+
+      // When it comes to objects, what about...
+
+      // Object.freeze()
+
+      const scoreObj = {
+        first: 44,
+        second: 12,
+        third: { a: 1, b: 2 },
+      };
+
+      Object.freeze(scoreObj);
+
+      scoreObj.third.a = 8;
+      console.log(scoreObj);
+
+      // still mutates, it is still a shallow copy
+
+      // How do we avoid these mutations
+
+      // Deep copy needed to avoid this
+
+      // Several libraries like lodash, Ramda have this feature built in
+
+      // Following code is a solution, but it does not work with Dates, functions,undefined, Infinity, RefExps, Maps, Sets Blobs, Filelists, Imagedates
+
+      const newScoreObj = JSON.parse(JSON.stringify(scoreObj));
+
+      // Vanilla js function to deep clone
+
+      const deepClone = (obj) => {
+        if (typeof obj !== "object" || obj === null) {
+          return obj;
+        }
+
+        // Create an array or object to hold the values
+ 
+        const newObject = Array.isArray(obj) ? [] : {};
+
+        console.log(newObject);
+
+        for (let key in obj) {
+          const value = obj[key];
+          console.log(value);
+          newObject[key] = deepClone(value);
+         
+        }
+        return newObject;
+        
+      };
+
+      const newObj = deepClone(scoreObj);
+      scoreObj.third.a = 6;
+      console.log(newObj)
+
+      let scoreArr = [1,2,3]
+
+      const pureAddToScoreHistory = (arr,score,deepClone)=>{
+         let arrClone = deepClone(arr);
+         arrClone.push(score);
+         return arrClone
+      }
+
+      const result = pureAddToScoreHistory(scoreArr,4,deepClone)
+
+      console.log(result)
+      console.log(scoreArr)
+      
+    </script>
+  </body>
+</html>
