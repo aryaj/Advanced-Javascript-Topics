@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Recursion
+      // Any situation where you do something, and depending on the result, you might do it again
+
+      // In programming recursion occurs when function calls itself
+
+      // Any iterator function(aka function with a loop) can be recursive instead
+
+      // iterator function
+
+      /*   const countToTen = (num = 1) => {
+        while (num <= 10) {
+          console.log(num);
+          num++;
+        }
+      };
+      countToTen(); */
+
+      // Recursive function have two parts
+      // 1. the recursive call to the function
+      // 2. atleast one condition to exit, otherwise it will be an endless loop
+
+      const recurToTen = (num = 1) => {
+        if (num > 10) {
+          return;
+        }
+        console.log(num);
+        num++;
+        recurToTen(num);
+      };
+      recurToTen();
+
+      // Reason to use Recursion
+      // 1.Less code
+
+      // Reason to not use Recursion
+      // 1. Performance (Loops are more performant then calling functions)
+      // Possibly more difficult to debug
+
+      // Fibonacci Sequence
+      // 0,1,1,2,3,5,8,13,21
+
+      // Create fibonacci sequence of length n
+
+      // Without Recursion
+
+      /*  const fibonacci = (num, array = [0, 1]) => {
+            while(num > 2){
+                const [nextTolast,last]= array.slice(-2);
+                array.push(nextTolast + last);
+                num--
+            }
+            return array;
+      };
+
+      console.log(fibonacci(12)) */
+
+      // With Recursion
+
+      /*       const fibonacci = (num, array = [0, 1]) => {
+        if (num <= 2) {
+          return array;
+        }
+        const [nextTolast, last] = array.slice(-2);
+        return fibonacci(num - 1, [...array, nextTolast + last]);
+      };
+
+      console.log(fibonacci(12)); */
+
+      // What number is on the nth position of the fibonacci sequence
+
+      // Without Recursion
+
+      /*       const fibonacci = (pos) => {
+        if (pos <= 1) {
+          return pos;
+        }
+        const seq = [0, 1];
+        for (i = 2; i <= pos; i++) {
+          const [nextTolast, last] = seq.slice(-2);
+          seq.push(nextTolast + last);
+        }
+        return seq[pos];
+      };
+
+      console.log(fibonacci(5)); */
+
+      // With Recursion
+
+      const fibPos = (pos) => {
+        if (pos < 2) {
+          return pos;
+        }
+        return fibPos(pos - 1) + fibPos(pos - 2);
+      };
+
+      console.log(fibPos(5));
+
+      // Power of sum
+
+      const powerOfSum = (num) => {
+        let possibleWays = 0;
+        for (i = 1; i < num - 2; i++) {
+          for (j = 2; j < num - 1; j++) {
+            if (i * i + j * j === num) {
+              possibleWays + 1;
+              return;
+            }
+          }
+        }
+        return possibleWays;
+      };
+
+      console.log(powerOfSum(10));
+    </script>
+  </body>
+</html>
